@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+
+:root {
+    --neon-blue: #00f3ff;
+    --neon-purple: #bc13fe;
+    --neon-red: #ff0033;
+    --neon-green: #0aff0a;
+    --neon-pink: #ff0080;
+    --bg-dark: #050510;
+    --glass-bg: rgba(5, 5, 16, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-dark);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Rajdhani', sans-serif;
+    color: white;
+}
+
+canvas {
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 0 50px rgba(0, 243, 255, 0.1);
+    display: block;
+}
+
+/* UI Overlay Container */
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#hud {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.hud-text {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--neon-blue);
+    font-size: 24px;
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border: 1px solid var(--neon-blue);
+    border-radius: 4px;
+    /* Angled corners look better with clip-path usually, but radius is safe */
+    clip-path: polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%);
+}
+
+#start-screen,
+#game-over-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(20, 10, 10, 0.9) 0%, rgba(0, 0, 0, 0.98) 100%);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    pointer-events: auto;
+    animation: screenFadeIn 1s ease-out;
+}
+
+.content-wrapper {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 60px;
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 243, 255, 0.05);
+    backdrop-filter: blur(10px);
+    transform: translateY(0);
+    animation: float 6s ease-in-out infinite, fadeIn 2s ease-out;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--neon-blue);
+    text-shadow: 0 0 20px var(--neon-blue);
+    margin-bottom: 10px;
+    letter-spacing: 4px;
+    position: relative;
+    text-align: center;
+}
+
+.title::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--neon-blue);
+    opacity: 0.5;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        filter: blur(2px);
+    }
+
+    50% {
+        opacity: 0.7;
+        filter: blur(5px);
+    }
+}
+
+.subtitle {
+    font-size: 18px;
+    color: var(--neon-purple);
+    margin-bottom: 50px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-shadow: 0 0 10px rgba(188, 19, 254, 0.5);
+}
+
+/* Difficulty Selector */
+.difficulty-selector {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.selector-label {
+    color: #888;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.difficulty-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.diff-btn {
+    background: transparent;
+    border: 1px solid #444;
+    color: #888;
+    padding: 10px 25px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    clip-path: polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%);
+}
+
+.diff-btn:hover {
+    border-color: var(--neon-blue);
+    color: var(--neon-blue);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+}
+
+.diff-btn.active {
+    background: var(--neon-blue);
+    color: #000;
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+    font-weight: bold;
+}
+
+/* Controls Guide */
+.controls-guide {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+    opacity: 0.8;
+}
+
+.key-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.key {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--neon-purple);
+    color: var(--neon-purple);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    box-shadow: 0 0 5px rgba(188, 19, 254, 0.3);
+}
+
+.key.wide {
+    width: 80px;
+}
+
+.key-label {
+    font-size: 12px;
+    color: #aaa;
+    margin-left: 10px;
+    letter-spacing: 1px;
+}
+
+/* Main Start Button */
+.btn {
+    padding: 20px 60px;
+    font-size: 24px;
+    background: transparent;
+    border: 2px solid var(--neon-green);
+    color: var(--neon-green);
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%);
+}
+
+.btn:hover {
+    background: var(--neon-green);
+    color: #000;
+    box-shadow: 0 0 30px rgba(10, 255, 10, 0.4);
+    transform: scale(1.05);
+}
+
+.hidden {
+    display: none !important;
+}

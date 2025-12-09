@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Galactic Defender</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="ui-layer">
+        <div id="hud">
+            <div id="score-display" class="hud-text">Score: 0</div>
+            <div id="lives-display" class="hud-text"></div>
+        </div>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="start-screen">
+        <div class="content-wrapper">
+            <h1 class="title" data-text="GALACTIC DEFENDER">GALACTIC DEFENDER</h1>
+            <p class="subtitle">DEFEND THE GALAXY FROM THE ALIEN INVASION</p>
+
+            <div class="difficulty-selector">
+                <p class="selector-label">SELECT DIFFICULTY</p>
+                <div class="difficulty-buttons">
+                    <button class="diff-btn" data-diff="easy">EASY</button>
+                    <button class="diff-btn active" data-diff="normal">NORMAL</button>
+                    <button class="diff-btn" data-diff="hard">HARD</button>
+                </div>
+            </div>
+
+            <button id="start-btn" class="btn glitch-effect">START MISSION</button>
+
+            <div class="controls-guide">
+                <div class="key-group">
+                    <div class="key">W</div>
+                    <div class="key">A</div>
+                    <div class="key">S</div>
+                    <div class="key">D</div>
+                    <span class="key-label">MOVE</span>
+                </div>
+                <div class="key-group">
+                    <div class="key wide">SPACE</div>
+                    <span class="key-label">SHOOT</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="game-over-screen" class="hidden">
+        <h1 class="title" style="color: #f00; text-shadow: 0 0 10px #f00;">GAME OVER</h1>
+        <p id="final-score" class="subtitle">Final Score: 0</p>
+        <button id="restart-btn" class="btn">RETRY MISSION</button>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Game Scripts -->
+    <script src="audio.js"></script>
+    <script src="input.js"></script>
+    <script src="entities.js"></script>
+    <script src="game.js"></script>
+</body>
+
+</html>
